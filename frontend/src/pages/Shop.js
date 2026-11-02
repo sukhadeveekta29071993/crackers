@@ -22,9 +22,24 @@ function HeroBanner({ title, subtitle, imageUrl }) {
       }}
     >
       {/* Decorative glints */}
-      <span className="absolute top-4 right-8 text-gold opacity-50" style={{ fontSize: 9 }}>★</span>
-      <span className="absolute top-8 right-20 text-gold opacity-25" style={{ fontSize: 6 }}>✦</span>
-      <span className="absolute top-3 right-36 text-gold opacity-20" style={{ fontSize: 7 }}>★</span>
+      <span
+        className="absolute top-4 right-8 text-gold opacity-50"
+        style={{ fontSize: 9 }}
+      >
+        ★
+      </span>
+      <span
+        className="absolute top-8 right-20 text-gold opacity-25"
+        style={{ fontSize: 6 }}
+      >
+        ✦
+      </span>
+      <span
+        className="absolute top-3 right-36 text-gold opacity-20"
+        style={{ fontSize: 7 }}
+      >
+        ★
+      </span>
 
       {/* Text block */}
       <div className="relative px-5 sm:px-8 pt-6 sm:pt-8 pb-5 sm:pb-7">
@@ -53,22 +68,48 @@ function PopularBanner({ count }) {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse 70% 130% at 0% 50%, #D13A1F 0%, #7A1410 50%, transparent 100%)",
+          background:
+            "radial-gradient(ellipse 70% 130% at 0% 50%, #D13A1F 0%, #7A1410 50%, transparent 100%)",
           opacity: 0.7,
         }}
       />
 
       {/* Decorative stars */}
-      <span className="absolute top-3 right-8 text-gold opacity-50" style={{ fontSize: 8, lineHeight: 1 }}>★</span>
-      <span className="absolute bottom-3 right-20 text-gold opacity-30" style={{ fontSize: 6, lineHeight: 1 }}>★</span>
-      <span className="absolute top-4 right-28 text-gold opacity-20" style={{ fontSize: 5, lineHeight: 1 }}>✦</span>
-      <span className="absolute bottom-4 right-12 text-gold opacity-25" style={{ fontSize: 7, lineHeight: 1 }}>✦</span>
+      <span
+        className="absolute top-3 right-8 text-gold opacity-50"
+        style={{ fontSize: 8, lineHeight: 1 }}
+      >
+        ★
+      </span>
+      <span
+        className="absolute bottom-3 right-20 text-gold opacity-30"
+        style={{ fontSize: 6, lineHeight: 1 }}
+      >
+        ★
+      </span>
+      <span
+        className="absolute top-4 right-28 text-gold opacity-20"
+        style={{ fontSize: 5, lineHeight: 1 }}
+      >
+        ✦
+      </span>
+      <span
+        className="absolute bottom-4 right-12 text-gold opacity-25"
+        style={{ fontSize: 7, lineHeight: 1 }}
+      >
+        ✦
+      </span>
 
       {/* Content */}
       <div className="relative flex items-center gap-3 sm:gap-5 px-4 sm:px-6 py-4 sm:py-5">
         {/* Icon */}
-        <div className="flex-none w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center"
-          style={{ background: "rgba(245,184,46,0.15)", border: "1px solid rgba(245,184,46,0.3)" }}>
+        <div
+          className="flex-none w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center"
+          style={{
+            background: "rgba(245,184,46,0.15)",
+            border: "1px solid rgba(245,184,46,0.3)",
+          }}
+        >
           <Sparkles size={20} className="text-gold" />
         </div>
 
@@ -82,13 +123,19 @@ function PopularBanner({ count }) {
               <span
                 data-testid="popular-banner-count"
                 className="text-gold font-bold text-[10px] sm:text-xs px-2 py-0.5 rounded-full"
-                style={{ background: "rgba(245,184,46,0.2)", border: "1px solid rgba(245,184,46,0.4)" }}
+                style={{
+                  background: "rgba(245,184,46,0.2)",
+                  border: "1px solid rgba(245,184,46,0.4)",
+                }}
               >
                 {count} items
               </span>
             )}
           </div>
-          <p className="text-sm sm:text-base mt-0.5 truncate" style={{ color: "rgba(255,246,232,0.55)" }}>
+          <p
+            className="text-sm sm:text-base mt-0.5 truncate"
+            style={{ color: "rgba(255,246,232,0.55)" }}
+          >
             Best-selling fireworks — curated by the shop
           </p>
         </div>
@@ -121,25 +168,27 @@ export default function Shop() {
 
   // Apply default category from settings once on mount (only if user hasn't manually changed it)
   const defaultApplied = useRef(false);
-  useEffect(() => {
-    if (!defaultApplied.current && shopInfo?.default_category) {
-      defaultApplied.current = true;
-      setCategory(shopInfo.default_category);
-    }
-  }, [shopInfo?.default_category]);
+  // useEffect(() => {
+  //   if (!defaultApplied.current && shopInfo?.default_category) {
+  //     defaultApplied.current = true;
+  //     setCategory(shopInfo.default_category);
+  //   }
+  // }, [shopInfo?.default_category]);
 
   // Show all DB categories; compute per-category product count
   const categories = allCategories;
   const countOf = useMemo(() => {
     const map = {};
-    products.forEach((p) => { map[p.category] = (map[p.category] || 0) + 1; });
+    products.forEach((p) => {
+      map[p.category] = (map[p.category] || 0) + 1;
+    });
     return map;
   }, [products]);
 
   const visible = products.filter(
     (p) =>
       (category === "All" || p.category === category) &&
-      p.name.toLowerCase().includes(q.trim().toLowerCase())
+      p.name.toLowerCase().includes(q.trim().toLowerCase()),
   );
 
   const wholesale = user?.customer_type === "wholesale" && user?.approved;
@@ -147,7 +196,9 @@ export default function Shop() {
   const lines = items
     .map((i) => {
       const p = products.find((x) => x.id === i.product_id);
-      return p ? { ...i, price: wholesale ? p.wholesale_price : p.retail_price } : null;
+      return p
+        ? { ...i, price: wholesale ? p.wholesale_price : p.retail_price }
+        : null;
     })
     .filter(Boolean);
   const totals = computeTotals(lines);
@@ -170,7 +221,10 @@ export default function Shop() {
               data-testid="shop-search-input"
               type="text"
               value={q}
-              onChange={(e) => { setQ(e.target.value); if (e.target.value) setCategory("All"); }}
+              onChange={(e) => {
+                setQ(e.target.value);
+                if (e.target.value) setCategory("All");
+              }}
               placeholder="Search Anar, Ladi, Rocket…"
               className="flex-1 bg-transparent outline-none text-sm text-ink placeholder:text-mocha min-w-0"
             />
@@ -179,12 +233,18 @@ export default function Shop() {
       </div>
 
       {wholesale && (
-        <div className="mx-5 mt-4 bg-[#DDF1E3] text-[#1F5F36] text-xs font-bold rounded-xl px-4 py-3" data-testid="wholesale-active-note">
+        <div
+          className="mx-5 mt-4 bg-[#DDF1E3] text-[#1F5F36] text-xs font-bold rounded-xl px-4 py-3"
+          data-testid="wholesale-active-note"
+        >
           Wholesale pricing applied
         </div>
       )}
       {user?.customer_type === "wholesale" && !user?.approved && (
-        <div className="mx-5 mt-4 bg-[#FFF0C9] text-[#5C3F00] text-xs font-bold rounded-xl px-4 py-3" data-testid="wholesale-pending-note">
+        <div
+          className="mx-5 mt-4 bg-[#FFF0C9] text-[#5C3F00] text-xs font-bold rounded-xl px-4 py-3"
+          data-testid="wholesale-pending-note"
+        >
           Wholesale prices unlock once the shop approves your account.
         </div>
       )}
@@ -209,8 +269,14 @@ export default function Shop() {
           >
             {c.name}
             {c.id !== "all" && countOf[c.name] > 0 && (
-              <span className={"text-[10px] sm:text-[11px] font-bold rounded-full px-1 sm:px-1.5 py-px leading-none " +
-                (category === c.name ? "bg-white/20 text-white" : "bg-chip text-mocha")}>
+              <span
+                className={
+                  "text-[10px] sm:text-[11px] font-bold rounded-full px-1 sm:px-1.5 py-px leading-none " +
+                  (category === c.name
+                    ? "bg-white/20 text-white"
+                    : "bg-chip text-mocha")
+                }
+              >
                 {countOf[c.name]}
               </span>
             )}
@@ -219,19 +285,26 @@ export default function Shop() {
       </div>
 
       {/* Popular Picks banner — shown when Popular category is active */}
-      {category === "Popular" && (
-        <PopularBanner count={visible.length} />
-      )}
+      {category === "Popular" && <PopularBanner count={visible.length} />}
 
       {/* Product grid / list */}
       {isLoading ? (
-        <div className="flex flex-col sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 px-3 sm:px-5 pt-3 sm:pt-5" data-testid="shop-loading">
+        <div
+          className="flex flex-col sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 px-3 sm:px-5 pt-3 sm:pt-5"
+          data-testid="shop-loading"
+        >
           {[...Array(8)].map((_, i) => (
-            <div key={i} className="bg-white border border-line rounded-2xl h-14 sm:h-60 animate-pulse" />
+            <div
+              key={i}
+              className="bg-white border border-line rounded-2xl h-14 sm:h-60 animate-pulse"
+            />
           ))}
         </div>
       ) : visible.length === 0 ? (
-        <div className="px-5 py-20 text-center text-mocha" data-testid="shop-empty">
+        <div
+          className="px-5 py-20 text-center text-mocha"
+          data-testid="shop-empty"
+        >
           No products found{q ? ` for "${q}"` : ""}.
         </div>
       ) : (
@@ -261,13 +334,24 @@ export default function Shop() {
                 {/* Info — middle */}
                 <div className="flex-1 min-w-0">
                   <div className="font-bold text-sm leading-snug">{p.name}</div>
-                  <div className="text-xs text-mocha">{p.pack_type} · {p.pack_size}</div>
-                  {p.brand && <div className="text-[10px] sm:text-xs font-bold text-brick uppercase tracking-wide">{p.brand}</div>}
+                  <div className="text-xs text-mocha">
+                    {p.pack_type} · {p.pack_size}
+                  </div>
+                  {p.brand && (
+                    <div className="text-[10px] sm:text-xs font-bold text-brick uppercase tracking-wide">
+                      {p.brand}
+                    </div>
+                  )}
                   {/* Price inline on mobile */}
-                  <div className="font-bold text-sm text-ink mt-0.5 sm:hidden">{priceShort(price)}</div>
+                  <div className="font-bold text-sm text-ink mt-0.5 sm:hidden">
+                    {priceShort(price)}
+                  </div>
                   {/* Stock warning inline on mobile */}
                   {!out && p.stock <= 10 && (
-                    <span className="sm:hidden text-[10px] font-bold text-maroon" data-testid={`stock-${slug}`}>
+                    <span
+                      className="sm:hidden text-[10px] font-bold text-maroon"
+                      data-testid={`stock-${slug}`}
+                    >
                       {p.stock} left
                     </span>
                   )}
@@ -275,9 +359,14 @@ export default function Shop() {
 
                 {/* Desktop-only price row */}
                 <div className="hidden sm:flex items-center justify-between min-h-[26px]">
-                  <div className="font-display font-bold text-lg">{priceShort(price)}</div>
+                  <div className="font-display font-bold text-lg">
+                    {priceShort(price)}
+                  </div>
                   {!out && p.stock <= 10 && (
-                    <span className="text-[11px] font-bold text-maroon bg-[#FFE3A3] rounded-lg px-2 py-[3px]" data-testid={`stock-${slug}`}>
+                    <span
+                      className="text-[11px] font-bold text-maroon bg-[#FFE3A3] rounded-lg px-2 py-[3px]"
+                      data-testid={`stock-${slug}`}
+                    >
                       {p.stock} left
                     </span>
                   )}
@@ -286,7 +375,12 @@ export default function Shop() {
                 {/* Add / Stepper — compact on mobile, full on desktop */}
                 <div className="flex-none">
                   {out ? (
-                    <button disabled className="h-9 sm:h-11 w-16 sm:w-full rounded-xl bg-chip text-mocha font-bold text-xs sm:text-sm">Out</button>
+                    <button
+                      disabled
+                      className="h-9 sm:h-11 w-16 sm:w-full rounded-xl bg-chip text-mocha font-bold text-xs sm:text-sm"
+                    >
+                      Out
+                    </button>
                   ) : qty > 0 ? (
                     <div
                       className="h-9 sm:h-11 border-[1.5px] border-brick rounded-xl overflow-hidden flex items-stretch w-[88px] sm:w-full"
@@ -300,7 +394,10 @@ export default function Shop() {
                       >
                         <Minus size={15} />
                       </button>
-                      <div className="flex-1 flex items-center justify-center font-bold text-sm" data-testid={`qty-${slug}`}>
+                      <div
+                        className="flex-1 flex items-center justify-center font-bold text-sm"
+                        data-testid={`qty-${slug}`}
+                      >
                         {qty}
                       </div>
                       <button
@@ -337,8 +434,12 @@ export default function Shop() {
             className="max-w-6xl mx-auto h-14 rounded-2xl bg-ink text-white flex items-center justify-between px-5 hover:opacity-95 transition-opacity"
           >
             <div className="flex flex-col gap-0.5">
-              <div className="text-xs text-gold font-medium">{totals.items} items · {totals.units} units</div>
-              <div className="font-display font-bold text-xl leading-6">{priceShort(totals.grand)}</div>
+              <div className="text-xs text-gold font-medium">
+                {totals.items} items · {totals.units} units
+              </div>
+              <div className="font-display font-bold text-xl leading-6">
+                {priceShort(totals.grand)}
+              </div>
             </div>
             <div className="flex items-center gap-2 text-gold font-bold text-[15px]">
               View cart <ArrowRight size={20} />
